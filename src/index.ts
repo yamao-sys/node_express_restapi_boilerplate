@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path'
+import { AppDataSource } from './data-source';
 
 const app = express()
 
@@ -26,6 +27,15 @@ app.get('/about', function (req, res) {
   res.send('about page')
 })
 
-app.listen(1234, function() {
+app.listen(1234, async function() {
 	console.log('server running');
+
+	// データベース接続
+	try {
+		await AppDataSource.initialize();
+		console.log("Data Source has been initialized!");
+	} catch (err) {
+		console.error("Error during Data Source initialization:", err);
+		throw err;
+	}
 })

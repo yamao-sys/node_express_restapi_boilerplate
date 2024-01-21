@@ -4,4 +4,4 @@ WORKDIR /simple_todo
 # コンテナの/appにコピー
 COPY ./package*.json ./
 
-CMD bash -c "npm install && npm run dev"
+CMD bash -c "npm install --legacy-peer-deps && npm run dev"
