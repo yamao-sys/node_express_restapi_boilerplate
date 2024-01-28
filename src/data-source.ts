@@ -8,8 +8,9 @@ const options: DataSourceOptions & SeederOptions = {
   port: 3306,
   username: "root",
   password: "root",
-  database: "simple_todo",
+  database: process.env.NODE_ENV === 'test' ? "simple_todo_test" : "simple_todo",
   synchronize: true,
+  dropSchema: process.env.NODE_ENV === 'test' ? true : false,
   logging: false,
   entities: [
     "src/entities/*.ts",

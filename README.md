@@ -18,3 +18,14 @@ seeding
 npx ts-node src/db/seeds/seed.ts
 
 参考: https://www.devist.xyz/posts/how-to-seed-a-database-with-type-orm-and-faker-in-2023
+
+
+単体テスト
+【参考】
+https://qiita.com/taisuke101700/items/149429774f9983296fa1
+https://qiita.com/noriaki/items/5d800ea1813c465a0a11
+https://qiita.com/mangano-ito/items/99dedf88d972e7e631b7
+https://zenn.dev/dove/articles/26cfbc647e1897
+https://supersoftware.jp/tech/20220826/16969/
+https://qiita.com/shun_xx/items/6c4fb4f0bfa62db8fd82
+https://github.com/nestjs/nest/issues/409
