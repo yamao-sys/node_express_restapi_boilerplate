@@ -52,18 +52,6 @@ app.get('/todos/:id', async function (req, res) {
 	});
 })
 
-app.get('/todos/:id', async function (req, res) {
-	const todo = await AppDataSource.getRepository(Todo).findOne({
-		where: {
-			id: Number(req.params.id)
-		}
-	});
-	res.json({
-		result: "SUCCESS",
-		data: todo
-	});
-})
-
 app.post('/todos', async function (req, res) {
 	const todo = new Todo();
 
@@ -120,15 +108,4 @@ app.delete('/todos/:id', async function (req, res) {
 	});
 })
 
-app.listen(1234, async function() {
-	console.log('server running');
-
-	// データベース接続
-	try {
-		await AppDataSource.initialize();
-		console.log("Data Source has been initialized!");
-	} catch (err) {
-		console.error("Error during Data Source initialization:", err);
-		throw err;
-	}
-})
+module.exports = app;
