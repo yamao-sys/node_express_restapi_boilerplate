@@ -46,6 +46,11 @@ app.get('/todos/:id', async function (req, res) {
 			id: Number(req.params.id)
 		}
 	});
+
+	if (!todo) {
+		return res.status(404).send('このTODOは存在しません');
+	}
+
 	res.json({
 		result: "SUCCESS",
 		data: todo
@@ -54,10 +59,6 @@ app.get('/todos/:id', async function (req, res) {
 
 app.post('/todos', async function (req, res) {
 	const todo = new Todo();
-
-	console.log(req.body);
-	console.log(req.body.title);
-	console.log(req.body.content);
 
 	todo.title = req.body.title;
 	todo.content = req.body.content;
@@ -76,7 +77,7 @@ app.put('/todos/:id', async function (req, res) {
 	});
 
 	if (!todo) {
-		return res.status(500).send("このTODOは存在しません");
+		return res.status(404).send("このTODOは存在しません");
 	}
 
 	todo.title = req.body.title;
@@ -98,7 +99,7 @@ app.delete('/todos/:id', async function (req, res) {
 	});
 
 	if (!todo) {
-		return res.status(500).send("このTODOは存在しません");
+		return res.status(404).send("このTODOは存在しません");
 	}
 
 	await todoRepository.remove(todo);
