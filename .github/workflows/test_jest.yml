@@ -1,0 +1,42 @@
+name: Jest
+
+on:
+  pull_request:
+    paths:
+      - '**.ts'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '**.yml'
+
+jobs:
+  jest:
+    name: jest
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+    services:
+      mysql:
+        image: mysql:8.0.28
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: simple_todo_test
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependecies
+        run: npm install --legacy-peer-deps
+
+      - name: Run Jest
+        run: npm run test
+        env:
+          DB_HOST: '127.0.0.1'
+
+
