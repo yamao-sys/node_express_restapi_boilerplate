@@ -2,8 +2,6 @@ import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 
-console.log(process.env?.DB_HOST ?? "db");
-
 const options: DataSourceOptions & SeederOptions = {
   type: "mysql",
   host: process.env?.DB_HOST ?? "db",
@@ -24,5 +22,8 @@ const options: DataSourceOptions & SeederOptions = {
   seeds: ["src/db/seeds/main.seed.ts"],
   factories: ["src/db/factories/**/*{.ts,.js}"]
 };
+
+console.log(options.host);
+console.log(options.database);
 
 export const AppDataSource = new DataSource(options);
