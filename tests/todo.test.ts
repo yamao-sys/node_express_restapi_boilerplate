@@ -22,7 +22,7 @@ describe('CRUD', () => {
 	});
 
 	afterAll(async () => {
-		AppDataSource.destroy(); 
+		await AppDataSource.destroy(); 
 	});
 
 	const todoRepository = AppDataSource.getRepository(Todo);
