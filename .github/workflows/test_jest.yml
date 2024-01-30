@@ -17,7 +17,7 @@ jobs:
     services:
       mysql:
         image: mysql:8.0.28
-        options: --name=db --hostname=db --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: simple_todo_test
@@ -36,5 +36,7 @@ jobs:
 
       - name: Run Jest
         run: npm run test
+        env:
+          DB_HOST: '127.0.0.1'
 
 
