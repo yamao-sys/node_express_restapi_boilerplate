@@ -1,0 +1,42 @@
+name: Jest
+
+on:
+  pull_request:
+    paths:
+      - '**.ts'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '**.yml'
+
+jobs:
+  jest:
+    name: jest
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+    services:
+      mysql:
+        image: mysql:8.0.28
+        container_name: db
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 3306
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      
+      - name: Install Dependecies
+        run: npm install --legacy-peer-deps
+
+      - name: Create DB
+        run: NODE_ENV=test npm run db:create
+
+      - name: Run Jest
+        run: npm run test
+
+
