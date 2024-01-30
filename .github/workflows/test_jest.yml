@@ -20,6 +20,7 @@ jobs:
         options: --name db --hostname db
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: simple_todo_test
         ports:
           - 3306
     steps:
@@ -32,9 +33,6 @@ jobs:
       
       - name: Install Dependecies
         run: npm install --legacy-peer-deps
-
-      - name: Create DB
-        run: NODE_ENV=test npm run db:create
 
       - name: Run Jest
         run: npm run test
