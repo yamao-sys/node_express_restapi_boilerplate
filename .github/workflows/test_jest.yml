@@ -30,10 +30,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-      
-      - name: Wait for MySQL to be ready
-        run: |
-          dockerize -wait tcp://localhost:3306 -timeout 1m
 
       - name: Install Dependecies
         run: npm install --legacy-peer-deps
