@@ -17,7 +17,7 @@ jobs:
     services:
       mysql:
         image: mysql:8.0.28
-        options: --hostname db
+        options: --name db --hostname db
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
