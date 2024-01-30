@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 
+console.log(process.env?.DB_HOST ?? "db");
+
 const options: DataSourceOptions & SeederOptions = {
   type: "mysql",
   host: process.env?.DB_HOST ?? "db",
