@@ -22,7 +22,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: simple_todo_test
         ports:
-          - 3306
+          - 3306:3306
     steps:
       - uses: actions/checkout@v3
 
