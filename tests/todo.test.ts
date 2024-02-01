@@ -31,9 +31,9 @@ describe('CRUD', () => {
 		describe('get', () => {
 			beforeEach(async () => {
 				await todoRepository.save([
-					{ title: faker.string.uuid(), content: faker.string.uuid() },
-					{ title: faker.string.uuid(), content: faker.string.uuid() },
-					{ title: faker.string.uuid(), content: faker.string.uuid() },
+					{ title: faker.string.alpha(), content: faker.string.alpha() },
+					{ title: faker.string.alpha(), content: faker.string.alpha() },
+					{ title: faker.string.alpha(), content: faker.string.alpha() },
 				]);
 			});
 	
@@ -48,22 +48,64 @@ describe('CRUD', () => {
 
 		describe('post', () => {
 			test('TODOが作成できること', async () => {
+				// NOTE: タイトルの最大文字数 ※ 最小文字数は必須入力のバリデーションのテスト(titleが空の時)で行う
+				const title = faker.string.alpha({ length: 255 })
 				const response = await request(app).post('/todos').send({
-					title: 'created title',
+					title: title,
 					content: 'created content',
 				});
 
 				// NOTE: レスポンスが返ってくることの確認
 				expect(response.body.result).toEqual('SUCCESS');
-				expect(response.body.data.title).toEqual('created title');
+				expect(response.body.data.title).toEqual(title);
 				expect(response.body.data.content).toEqual('created content');
 
 				let createdTodo = await todoRepository.findOne({
 					where: {},
 					order: { id: 'DESC' },
 				});
-				expect(createdTodo?.title).toEqual('created title');
+				expect(createdTodo?.title).toEqual(title);
 				expect(createdTodo?.content).toEqual('created content');
+			})
+
+			describe('titleのバリデーションエラーがある時', () => {
+				describe('titleが空の時', () => {
+					test('TODOの作成に失敗すること', async () => {
+						const response = await request(app).post('/todos').send({
+							title: '',
+							content: 'created content',
+						});
+		
+						// NOTE: レスポンスが返ってくることの確認
+						expect(response.body.result).toEqual('FAILED TO CREATE TODO');
+						expect(response.body.errors).toMatch('タイトルは必須です。');
+		
+						let createdTodo = await todoRepository.findOne({
+							where: {},
+							order: { id: 'DESC' },
+						});
+						expect(createdTodo).toEqual(null);
+					})
+				})
+
+				describe('titleが文字数オーバーの時', () => {
+					test('TODOの作成に失敗すること', async () => {
+						const response = await request(app).post('/todos').send({
+							title: faker.string.alpha({ length: 256 }),
+							content: 'created content',
+						});
+		
+						// NOTE: レスポンスが返ってくることの確認
+						expect(response.body.result).toEqual('FAILED TO CREATE TODO');
+						expect(response.body.errors).toMatch('1文字以上255文字以下での入力をお願いします。');
+		
+						let createdTodo = await todoRepository.findOne({
+							where: {},
+							order: { id: 'DESC' },
+						});
+						expect(createdTodo).toEqual(null);
+					})
+				})
 			})
 		})
 	});
@@ -135,6 +177,48 @@ describe('CRUD', () => {
 					expect(response.status).toEqual(404);
 				});
 			});
+
+			describe('titleのバリデーションエラーがある時', () => {
+				describe('titleが空の時', () => {
+					test('TODOの作成に失敗すること', async () => {
+						targetTodo = await todoRepository.findOneBy({ title: '1 title' });
+
+						const response = await request(app).put(`/todos/${targetTodo?.id}`).send({
+							title: '',
+							content: 'updated content',
+						});
+		
+						// NOTE: レスポンスが返ってくることの確認
+						expect(response.body.result).toEqual('FAILED TO UPDATE TODO');
+						expect(response.body.errors).toMatch('タイトルは必須です。');
+		
+						// NOTE: 更新されていないことの確認
+						let updatedTodo = await todoRepository.findOneBy({ id: targetTodo?.id });
+						expect(updatedTodo?.title).toEqual('1 title');
+						expect(updatedTodo?.content).toEqual('1 content');
+					})
+				})
+
+				describe('titleが文字数オーバーの時', () => {
+					test('TODOの作成に失敗すること', async () => {
+						targetTodo = await todoRepository.findOneBy({ title: '1 title' });
+
+						const response = await request(app).put(`/todos/${targetTodo?.id}`).send({
+							title: faker.string.alpha({ length: 256 }),
+							content: 'updated content',
+						});
+		
+						// NOTE: レスポンスが返ってくることの確認
+						expect(response.body.result).toEqual('FAILED TO UPDATE TODO');
+						expect(response.body.errors).toMatch('1文字以上255文字以下での入力をお願いします。');
+		
+						// NOTE: 更新されていないことの確認
+						let updatedTodo = await todoRepository.findOneBy({ id: targetTodo?.id });
+						expect(updatedTodo?.title).toEqual('1 title');
+						expect(updatedTodo?.content).toEqual('1 content');
+					})
+				})
+			})
 		});
 
 		describe('delete', () => {
