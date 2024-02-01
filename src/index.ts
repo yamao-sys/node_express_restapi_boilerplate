@@ -4,6 +4,8 @@ import bodyParser from 'body-parser'
 import { AppDataSource } from './data-source';
 
 import Todo from './entities/Todo';
+import { validate } from 'class-validator';
+import { format_validation_errors } from './lib/format_validation_errors';
 
 const app = express()
 
@@ -62,6 +64,15 @@ app.post('/todos', async function (req, res) {
 
 	todo.title = req.body.title;
 	todo.content = req.body.content;
+
+	const validation_errors = await validate(todo);
+	if (validation_errors.length > 0) {
+		return res.json({
+			result: "FAILED TO CREATE TODO",
+			errors: format_validation_errors(validation_errors)
+		});
+	}
+
 	await AppDataSource.manager.save(todo)
 	res.json({
 		result: "SUCCESS",
@@ -82,6 +93,14 @@ app.put('/todos/:id', async function (req, res) {
 
 	todo.title = req.body.title;
 	todo.content = req.body.content;
+
+	const validation_errors = await validate(todo);
+	if (validation_errors.length > 0) {
+		return res.json({
+			result: "FAILED TO UPDATE TODO",
+			errors: format_validation_errors(validation_errors)
+		});
+	}
 
 	await todoRepository.save(todo);
 

@@ -29,3 +29,10 @@ https://zenn.dev/dove/articles/26cfbc647e1897
 https://supersoftware.jp/tech/20220826/16969/
 https://qiita.com/shun_xx/items/6c4fb4f0bfa62db8fd82
 https://github.com/nestjs/nest/issues/409
+
+
+バリデーションチェック
+【参考】
+https://orkhan.gitbook.io/typeorm/docs/validation
+https://qiita.com/t-kubodera/items/2839ec4e4fe667b43f18
+https://zenn.dev/engineerhikaru/books/0a615c1248a2ea/viewer/da7ce1
