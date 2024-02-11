@@ -36,3 +36,7 @@ https://github.com/nestjs/nest/issues/409
 https://orkhan.gitbook.io/typeorm/docs/validation
 https://qiita.com/t-kubodera/items/2839ec4e4fe667b43f18
 https://zenn.dev/engineerhikaru/books/0a615c1248a2ea/viewer/da7ce1
+
+アソシエーション
+【参考】
+https://qiita.com/jnst/items/9a4c1a9f15b165e0e420
