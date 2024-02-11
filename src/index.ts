@@ -99,11 +99,9 @@ app.get('/about', function (req, res) {
 })
 
 app.get('/todos', async function (req, res) {
-	const user = await getAuthUser(req.headers?.authorization ?? '') || new User();
-
 	const todos = await AppDataSource.getRepository(Todo).find({
 		where: {
-			user: user
+			user: await getAuthUser(req.headers?.authorization ?? '')
 		}
 	});
 	res.json({
@@ -113,12 +111,10 @@ app.get('/todos', async function (req, res) {
 })
 
 app.get('/todos/:id', async function (req, res) {
-	const user = await getAuthUser(req.headers?.authorization ?? '') || new User();
-
 	const todo = await AppDataSource.getRepository(Todo).findOne({
 		where: {
 			id: Number(req.params.id),
-			user: user
+			user: await getAuthUser(req.headers?.authorization ?? '')
 		}
 	});
 
@@ -133,13 +129,11 @@ app.get('/todos/:id', async function (req, res) {
 })
 
 app.post('/todos', async function (req, res) {
-	const user = await getAuthUser(req.headers?.authorization ?? '') || new User();
-
 	const todo = new Todo();
 
 	todo.title = req.body.title;
 	todo.content = req.body.content;
-	todo.user = user;
+	todo.user = await getAuthUser(req.headers?.authorization ?? '');
 
 	const validation_errors = await validate(todo);
 	if (validation_errors.length > 0) {
@@ -157,13 +151,11 @@ app.post('/todos', async function (req, res) {
 })
 
 app.put('/todos/:id', async function (req, res) {
-	const user = await getAuthUser(req.headers?.authorization ?? '') || new User();
-
 	const todoRepository = AppDataSource.getRepository(Todo);
 
 	const todo = await todoRepository.findOneBy({
 		id: Number(req.params.id),
-		user: user,
+		user: await getAuthUser(req.headers?.authorization ?? ''),
 	});
 
 	if (!todo) {
@@ -190,13 +182,11 @@ app.put('/todos/:id', async function (req, res) {
 })
 
 app.delete('/todos/:id', async function (req, res) {
-	const user = await getAuthUser(req.headers?.authorization ?? '') || new User();
-	
 	const todoRepository = AppDataSource.getRepository(Todo);
 
 	const todo = await todoRepository.findOneBy({
 		id: Number(req.params.id),
-		user: user,
+		user: await getAuthUser(req.headers?.authorization ?? ''),
 	});
 
 	if (!todo) {

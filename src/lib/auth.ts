@@ -12,11 +12,13 @@ export function generateToken(user: authUser) {
 }
 
 export async function getAuthUser(token: string) {
-  const decodedToken = await jwt.verify(token, process.env?.JWT_SECRET || 'aaa')
-  
-  return AppDataSource.getRepository(User).findOneBy({
+  const decodedToken = jwt.verify(token, process.env?.JWT_SECRET || 'aaa')
+
+  const user = await AppDataSource.getRepository(User).findOneBy({
     id: Number((decodedToken as any).id)
-  });
+  })
+  
+  return user || new User();
 }
 
 export async function verifyAuth(req: express.Request, res: express.Response, next: NextFunction) {
