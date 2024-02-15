@@ -10,6 +10,8 @@ import { expressjwt } from 'express-jwt';
 import { generateToken, verifyAuth } from './lib/auth';
 import { compare, hash } from 'bcrypt';
 import { User } from './entities/User';
+import { container } from './inversify.config';
+import { TYPES } from './inject.types';
 import { TodoController } from './controllers/Todo.controller';
 
 const app = express()
@@ -71,8 +73,6 @@ app.use('/todos', expressjwt({
 	}
 }));
 
-app.use('/todos', verifyAuth);
-
 app.use(function (err: express.ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) {
   if (err.name === "UnauthorizedError") {
     res.redirect('/login');
@@ -85,11 +85,12 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-const todoController = new TodoController();
-app.get('/todos', todoController.index);
-app.get('/todos/:id', todoController.show);
-app.post('/todos', todoController.create);
-app.put('/todos/:id', todoController.update);
-app.delete('/todos/:id', todoController.delete);
+const todoController = container.get<TodoController>(TYPES.TodoController);
+app.use('/todos', verifyAuth);
+app.get('/todos', async (req, res) => await todoController.index(req, res));
+app.get('/todos/:id', async (req, res) => await todoController.show(req, res));
+app.post('/todos', async (req, res) => await todoController.create(req, res));
+app.put('/todos/:id', async (req, res) => await todoController.update(req, res));
+app.delete('/todos/:id', async (req, res) => await todoController.delete(req, res));
 
 module.exports = app;

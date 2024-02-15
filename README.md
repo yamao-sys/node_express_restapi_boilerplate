@@ -44,3 +44,8 @@ https://qiita.com/jnst/items/9a4c1a9f15b165e0e420
 Controller, modelの作成
 ・routing-controllersなるものがあるらしいが、少しメンテナンスされているか不安のため自作でいく
 https://github.com/typestack/routing-controllers
+
+アーキテクチャのリファクタリング
+・Node.js/ExpressのDI: 自前で用意する or DIライブラリ(InversifyJS)を用いる
+【参考】
+https://zenn.dev/ikefukurou777/articles/65cfd0289ac74d
