@@ -40,3 +40,7 @@ https://zenn.dev/engineerhikaru/books/0a615c1248a2ea/viewer/da7ce1
 アソシエーション
 【参考】
 https://qiita.com/jnst/items/9a4c1a9f15b165e0e420
+
+Controller, modelの作成
+・routing-controllersなるものがあるらしいが、少しメンテナンスされているか不安のため自作でいく
+https://github.com/typestack/routing-controllers
