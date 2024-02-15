@@ -3,14 +3,14 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import { AppDataSource } from './data-source';
 
-import Todo from './entities/Todo';
 import { validate } from 'class-validator';
 import { format_validation_errors } from './lib/format_validation_errors';
 
 import { expressjwt } from 'express-jwt';
-import { generateToken, getAuthUser, verifyAuth } from './lib/auth';
+import { generateToken, verifyAuth } from './lib/auth';
 import { compare, hash } from 'bcrypt';
 import { User } from './entities/User';
+import { TodoController } from './controllers/Todo.controller';
 
 const app = express()
 
@@ -98,106 +98,11 @@ app.get('/about', function (req, res) {
   res.send('about page')
 })
 
-app.get('/todos', async function (req, res) {
-	const todos = await AppDataSource.getRepository(Todo).find({
-		where: {
-			user: await getAuthUser(req.headers?.authorization ?? '')
-		}
-	});
-	res.json({
-		result: "SUCCESS",
-		data: todos
-	});
-})
-
-app.get('/todos/:id', async function (req, res) {
-	const todo = await AppDataSource.getRepository(Todo).findOne({
-		where: {
-			id: Number(req.params.id),
-			user: await getAuthUser(req.headers?.authorization ?? '')
-		}
-	});
-
-	if (!todo) {
-		return res.status(404).send('このTODOは存在しません');
-	}
-
-	res.json({
-		result: "SUCCESS",
-		data: todo
-	});
-})
-
-app.post('/todos', async function (req, res) {
-	const todo = new Todo();
-
-	todo.title = req.body.title;
-	todo.content = req.body.content;
-	todo.user = await getAuthUser(req.headers?.authorization ?? '');
-
-	const validation_errors = await validate(todo);
-	if (validation_errors.length > 0) {
-		return res.json({
-			result: "FAILED TO CREATE TODO",
-			errors: format_validation_errors(validation_errors)
-		});
-	}
-
-	await AppDataSource.manager.save(todo)
-	res.json({
-		result: "SUCCESS",
-		data: todo
-	});
-})
-
-app.put('/todos/:id', async function (req, res) {
-	const todoRepository = AppDataSource.getRepository(Todo);
-
-	const todo = await todoRepository.findOneBy({
-		id: Number(req.params.id),
-		user: await getAuthUser(req.headers?.authorization ?? ''),
-	});
-
-	if (!todo) {
-		return res.status(404).send("このTODOは存在しません");
-	}
-
-	todo.title = req.body.title;
-	todo.content = req.body.content;
-
-	const validation_errors = await validate(todo);
-	if (validation_errors.length > 0) {
-		return res.json({
-			result: "FAILED TO UPDATE TODO",
-			errors: format_validation_errors(validation_errors)
-		});
-	}
-
-	await todoRepository.save(todo);
-
-	res.json({
-		result: "SUCCESS",
-		data: todo
-	});
-})
-
-app.delete('/todos/:id', async function (req, res) {
-	const todoRepository = AppDataSource.getRepository(Todo);
-
-	const todo = await todoRepository.findOneBy({
-		id: Number(req.params.id),
-		user: await getAuthUser(req.headers?.authorization ?? ''),
-	});
-
-	if (!todo) {
-		return res.status(404).send("このTODOは存在しません");
-	}
-
-	await todoRepository.remove(todo);
-
-	res.json({
-		result: "SUCCESS"
-	});
-})
+const todoController = new TodoController();
+app.get('/todos', todoController.index);
+app.get('/todos/:id', todoController.show);
+app.post('/todos', todoController.create);
+app.put('/todos/:id', todoController.update);
+app.delete('/todos/:id', todoController.delete);
 
 module.exports = app;
