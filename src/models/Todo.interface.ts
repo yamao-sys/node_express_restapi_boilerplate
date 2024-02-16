@@ -12,7 +12,7 @@ export default interface ITodoModel {
 	remove(todo: Todo): Promise<Todo>;
 }
 
-interface todoParams {
+export interface todoParams {
 	title: string;
 	content: string;
 }
