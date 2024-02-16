@@ -1,18 +1,12 @@
 import express, { NextFunction } from 'express';
 import path from 'path'
 import bodyParser from 'body-parser'
-import { AppDataSource } from './data-source';
-
-import { validate } from 'class-validator';
-import { format_validation_errors } from './lib/format_validation_errors';
-
 import { expressjwt } from 'express-jwt';
-import { generateToken, verifyAuth } from './lib/auth';
-import { compare, hash } from 'bcrypt';
-import { User } from './entities/User';
+import { verifyAuth } from './lib/auth';
 import { container } from './inversify.config';
 import { TYPES } from './inject.types';
 import { TodoController } from './controllers/Todo.controller';
+import { AuthController } from './controllers/Auth.controller';
 
 const app = express()
 
@@ -24,44 +18,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.json())
 
-app.post('/signup', async function (req, res) {
-	const hashedPassword = req.body.password ? await hash(req.body.password, 10) : '';
-
-	const user = new User();
-
-	user.email = req.body.email;
-	user.password = hashedPassword;
-
-	const validation_errors = await validate(user);
-	if (validation_errors.length > 0) {
-		return res.json({
-			result: "FAILED TO SIGNUP",
-			errors: format_validation_errors(validation_errors)
-		});
-	}
-
-	await AppDataSource.getRepository(User).save(user);
-
-	res.json({ result: "SUCCESS" });
-})
-
-app.post('/login', async function (req, res) {
-	const user = await AppDataSource.getRepository(User).findOneBy({
-		email: req.body.email
-	});
-
-	if (!user) {
-		return res.status(404).send('メールアドレスまたはパスワードが異なります。')
-	}
-
-	const isValidPassword = await compare(req.body.password, user.password)
-	if (isValidPassword) {
-		const token = await generateToken({ id: user.id });
-		res.json({ result: 'SUCCESS', token: token });
-	} else {
-		return res.status(404).send('メールアドレスまたはパスワードが異なります。')
-	}
-})
+// Auth
+const authController = container.get<AuthController>(TYPES.AuthController);
+app.post('/signup', async (req, res) => await authController.signup(req, res));
+app.post('/login', async (req, res) => await authController.login(req, res));
 
 // JWTを使用してルートを保護する
 app.use('/todos', expressjwt({
@@ -72,7 +32,7 @@ app.use('/todos', expressjwt({
 		return token?.toString();
 	}
 }));
-
+// 認証が必要なページはログイン画面へリダイレクト
 app.use(function (err: express.ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) {
   if (err.name === "UnauthorizedError") {
     res.redirect('/login');
@@ -85,6 +45,7 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
+// Todo
 const todoController = container.get<TodoController>(TYPES.TodoController);
 app.use('/todos', verifyAuth);
 app.get('/todos', async (req, res) => await todoController.index(req, res));

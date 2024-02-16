@@ -4,12 +4,7 @@ import { User } from "../entities/User";
 import { validate } from "class-validator";
 import { injectable } from "inversify";
 import { AppDataSource } from "../data-source";
-import ITodoModel from "./Todo.interface";
-
-interface todoParams {
-	title: string;
-	content: string;
-}
+import ITodoModel, { todoParams } from "./Todo.interface";
 
 @injectable()
 export class TodoModel implements ITodoModel {
