@@ -4,17 +4,17 @@ import Todo from './Todo'
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number
+    @PrimaryGeneratedColumn()
+    id!: number
 
-  @IsNotEmpty({ message: 'メールアドレスは必須入力です。' })
-  @Column()
-  email!: string
+    @IsNotEmpty({ message: 'メールアドレスは必須入力です。' })
+    @Column()
+    email!: string
 
-  @IsNotEmpty({ message: 'パスワードは必須入力です。' })
-  @Column({ type: 'text' })
-  password!: string
+    @IsNotEmpty({ message: 'パスワードは必須入力です。' })
+    @Column({ type: 'text' })
+    password!: string
 
-  @OneToMany(() => Todo, (todo) => todo.user)
-  todos: Todo[]
+    @OneToMany(() => Todo, (todo) => todo.user)
+    todos: Todo[]
 }
