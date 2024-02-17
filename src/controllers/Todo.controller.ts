@@ -20,7 +20,7 @@ export class TodoController {
 		res.json({
 			result: 'SUCCESS',
 			data: todos
-		})
+		});
 	}
 
 	public async show(req: express.Request, res: express.Response) {
