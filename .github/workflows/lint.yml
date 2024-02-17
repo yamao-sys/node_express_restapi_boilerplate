@@ -3,8 +3,7 @@ name: Lint
 on:
   pull_request:
     paths:
-      - src/**/*{.ts,.js}
-      - tests/**/*{.ts,.js}
+      - '**.ts'
 
 jobs:
   lint:
@@ -17,5 +16,5 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-reivew
-          eslint_flags: "{src,tests}/**/*{.ts,.js}"
+          eslint_flags: "**.ts"
           fail_on_error: true
