@@ -12,7 +12,7 @@ export const createAuthRoutes = (app: express.Express) => {
 	app.post('/signup', async (req, res) => await authController.signup(req, res))
 	app.post('/login', async (req, res) => await authController.login(req, res))
 
-	app.use(cookieParser());
+	app.use(cookieParser())
 }
 
 export const redirectLoginPageUnlessLoggedIn = (err: express.ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) => {
