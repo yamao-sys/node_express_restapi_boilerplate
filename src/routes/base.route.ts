@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
 
@@ -12,4 +12,4 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(bodyParser.json())
 
-export default app;
+export default app

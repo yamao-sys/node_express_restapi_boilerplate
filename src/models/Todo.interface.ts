@@ -1,6 +1,6 @@
-import { ValidationError } from "class-validator";
-import Todo from "../entities/Todo";
-import { User } from "../entities/User";
+import { ValidationError } from 'class-validator'
+import Todo from '../entities/Todo'
+import { User } from '../entities/User'
 
 export default interface ITodoModel {
 	findByUser(user: User): Promise<Todo[]>;

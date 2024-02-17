@@ -1,12 +1,12 @@
-import { DataSource } from "typeorm";
-import { Seeder, SeederFactoryManager } from "typeorm-extension";
+import { DataSource } from 'typeorm'
+import { Seeder, SeederFactoryManager } from 'typeorm-extension'
 
-import Todo from '../../entities/Todo';
+import Todo from '../../entities/Todo'
 
 export class MainSeeder implements Seeder {
-	public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<any> {
+	public async run(dataSource: DataSource, factoryManager: SeederFactoryManager) {
 		const todoFactory = factoryManager.get(Todo)
 
-		const todos = await todoFactory.saveMany(10)
+		await todoFactory.saveMany(10)
 	}
 }

@@ -1,10 +1,10 @@
 const TYPES = {
 	// Todo
-	TodoController: Symbol.for("TodoController"),
-	ITodoModel: Symbol.for("ITodoModel"),
+	TodoController: Symbol.for('TodoController'),
+	ITodoModel: Symbol.for('ITodoModel'),
 	// User
-	AuthController: Symbol.for("AuthController"),
-	IUserModel: Symbol.for("IUserModel"),
-};
+	AuthController: Symbol.for('AuthController'),
+	IUserModel: Symbol.for('IUserModel'),
+}
 
-export { TYPES };
+export { TYPES }

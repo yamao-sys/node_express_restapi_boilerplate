@@ -1,32 +1,32 @@
-import { injectable } from "inversify";
-import { Repository } from "typeorm";
-import { User } from "../entities/User";
-import { AppDataSource } from "../data-source";
-import { compare, hash } from "bcrypt";
-import { validate } from "class-validator";
-import { IUserModel, userParams } from "./User.interface";
+import { injectable } from 'inversify'
+import { Repository } from 'typeorm'
+import { User } from '../entities/User'
+import { AppDataSource } from '../data-source'
+import { compare, hash } from 'bcrypt'
+import { validate } from 'class-validator'
+import { IUserModel, userParams } from './User.interface'
 
 @injectable()
 export class UserModel implements IUserModel {
-	private _userRepository: Repository<User>;
+	private _userRepository: Repository<User>
 
 	public constructor() {
-		this._userRepository = AppDataSource.getRepository(User);
+		this._userRepository = AppDataSource.getRepository(User)
 	}
 
 	public async buildNewUser(params: userParams) {
-		const hashedPassword = params.password ? await hash(params.password, 10) : '';
+		const hashedPassword = params.password ? await hash(params.password, 10) : ''
 
-		const user = new User();
+		const user = new User()
 
-		user.email = params.email;
-		user.password = hashedPassword;
+		user.email = params.email
+		user.password = hashedPassword
 
-		return user;
+		return user
 	}
 
 	public async validate(user: User) {
-		return validate(user);
+		return validate(user)
 	}
 
 	public async save(user: User) {
@@ -36,11 +36,11 @@ export class UserModel implements IUserModel {
 	public async signin(params: userParams) {
 		const user = await this._userRepository.findOneBy({
 			email: params.email
-		});
+		})
 
-		if (!user) return null;
+		if (!user) return null
 
-		const isValidPassword = await compare(params.password, user.password);
-		return isValidPassword ? user : null;
+		const isValidPassword = await compare(params.password, user.password)
+		return isValidPassword ? user : null
 	}
 }
