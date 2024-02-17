@@ -58,8 +58,8 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 - 静的解析(ESLint, Prettier)
 - Github Actions
 	- 静的解析(ESLint, Prettier)
-  - CI all greenでマージできるように
 - 環境変数の管理
 	- ローカルと本番で分ける
 - DBの設定
 	- テスト時、本番のマイグレーション
+- 単体テストを書く
