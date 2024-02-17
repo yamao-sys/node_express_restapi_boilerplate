@@ -1,5 +1,5 @@
-import { ValidationError } from "class-validator";
-import { User } from "../entities/User";
+import { ValidationError } from 'class-validator'
+import { User } from '../entities/User'
 
 export interface IUserModel {
 	buildNewUser(params: userParams): Promise<User>;

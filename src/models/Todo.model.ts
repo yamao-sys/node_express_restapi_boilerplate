@@ -1,17 +1,17 @@
-import { Repository } from "typeorm";
-import Todo from "../entities/Todo";
-import { User } from "../entities/User";
-import { validate } from "class-validator";
-import { injectable } from "inversify";
-import { AppDataSource } from "../data-source";
-import ITodoModel, { todoParams } from "./Todo.interface";
+import { Repository } from 'typeorm'
+import Todo from '../entities/Todo'
+import { User } from '../entities/User'
+import { validate } from 'class-validator'
+import { injectable } from 'inversify'
+import { AppDataSource } from '../data-source'
+import ITodoModel, { todoParams } from './Todo.interface'
 
 @injectable()
 export class TodoModel implements ITodoModel {
-	private _todoRepository: Repository<Todo>;
+	private _todoRepository: Repository<Todo>
 
 	public constructor() {
-		this._todoRepository = AppDataSource.getRepository(Todo);
+		this._todoRepository = AppDataSource.getRepository(Todo)
 	}
 
 	public async findByUser(user: User) {
@@ -19,7 +19,7 @@ export class TodoModel implements ITodoModel {
 			where: {
 				user: user
 			}
-		});
+		})
 	}
 
 	public async findOne(id: number, user: User) {
@@ -28,26 +28,26 @@ export class TodoModel implements ITodoModel {
 				id: id,
 				user: user
 			}
-		});
+		})
 	}
 
 	public async buildNewTodo(params: todoParams, user: User) {
-		let todo = new Todo();
+		let todo = new Todo()
 
-		todo = await this.assignParams(todo, params);
-		todo.user = user;
+		todo = await this.assignParams(todo, params)
+		todo.user = user
 
-		return todo;
+		return todo
 	}
 
 	public async assignParams(todo: Todo, params: todoParams) {
-		todo.title = params.title;
-		todo.content = params.content;
-		return todo;
+		todo.title = params.title
+		todo.content = params.content
+		return todo
 	}
 
 	public async validate(todo: Todo) {
-		return validate(todo);
+		return validate(todo)
 	}
 
 	public async save(todo: Todo) {
@@ -55,6 +55,6 @@ export class TodoModel implements ITodoModel {
 	}
 
 	public async remove(todo: Todo) {
-		return this._todoRepository.remove(todo);
+		return this._todoRepository.remove(todo)
 	}
 }
