@@ -23,10 +23,6 @@ export async function getAuthUser(token: string) {
 
 export async function verifyAuth(req: express.Request, res: express.Response, next: NextFunction) {
   const token = req.headers.authorization ?? '';
-  if (!token) {
-    res.status(401).send('認証情報がありません。')
-  }
-
   const authUser = await getAuthUser(token);
   if (!authUser?.id) {
     res.status(404).send('認証情報が正しくありません。')

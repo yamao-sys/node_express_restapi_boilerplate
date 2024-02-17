@@ -1,6 +1,11 @@
 import { AppDataSource } from "./data-source";
+import { createAuthRoutes } from "./routes/auth.route";
+import { createTodoRoutes } from "./routes/todo.route";
 
-const app = require('./index')
+import app from './routes/base.route';
+
+createAuthRoutes(app);
+createTodoRoutes(app);
 
 app.listen(1234, async function() {
 	// データベース接続
