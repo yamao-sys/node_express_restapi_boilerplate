@@ -5,7 +5,12 @@ import { User } from "../src/entities/User";
 import { hash } from "bcrypt";
 
 const request = require('supertest');
-const app = require('../src/index');
+import app from '../src/routes/base.route';
+import { createAuthRoutes } from "../src/routes/auth.route";
+import { createTodoRoutes } from "../src/routes/todo.route";
+
+createAuthRoutes(app);
+createTodoRoutes(app);
 
 describe('CRUD', () => {
 	beforeAll(async () => {

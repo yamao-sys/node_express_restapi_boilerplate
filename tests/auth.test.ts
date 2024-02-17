@@ -3,7 +3,10 @@ import { AppDataSource } from "../src/data-source";
 import { User } from "../src/entities/User";
 
 const request = require('supertest');
-const app = require('../src/index');
+import app from '../src/routes/base.route';
+import { createAuthRoutes } from "../src/routes/auth.route";
+
+createAuthRoutes(app);
 
 describe('auth', () => {
 	beforeAll(async () => {
