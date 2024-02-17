@@ -49,3 +49,14 @@ https://github.com/typestack/routing-controllers
 ・Node.js/ExpressのDI: 自前で用意する or DIライブラリ(InversifyJS)を用いる
 【参考】
 https://zenn.dev/ikefukurou777/articles/65cfd0289ac74d
+
+☆残タスク
+- JWTをCookieに載せる
+- 静的解析(ESLint, Prettier)
+- Github Actions
+	- 静的解析(ESLint, Prettier)
+  - CI all greenでマージできるように
+- 環境変数の管理
+	- ローカルと本番で分ける
+- DBの設定
+	- テスト時、本番のマイグレーション

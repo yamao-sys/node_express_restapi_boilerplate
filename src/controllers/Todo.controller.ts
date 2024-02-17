@@ -1,5 +1,4 @@
 import express from 'express';
-import { getAuthUser } from '../lib/auth';
 import { format_validation_errors } from '../lib/format_validation_errors';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../inject.types';
@@ -17,7 +16,7 @@ export class TodoController {
   }
 
 	public async index(req: express.Request, res: express.Response) {
-		const todos = await this._todoModel.findByUser(await getAuthUser(req.headers?.authorization ?? ''));
+		const todos = await this._todoModel.findByUser(res.locals.authUser);
 		res.json({
 			result: "SUCCESS",
 			data: todos
@@ -25,7 +24,7 @@ export class TodoController {
 	}
 
 	public async show(req: express.Request, res: express.Response) {
-		const todo = await this._todoModel.findOne(Number(req.params.id), await getAuthUser(req.headers?.authorization ?? ''));
+		const todo = await this._todoModel.findOne(Number(req.params.id), res.locals.authUser);
 
 		if (!todo) {
 			return res.status(404).send('このTODOは存在しません');
@@ -38,7 +37,7 @@ export class TodoController {
 	}
 
 	public async create(req: express.Request, res: express.Response) {
-		const todo = await this._todoModel.buildNewTodo(req.body, await getAuthUser(req.headers?.authorization ?? ''));
+		const todo = await this._todoModel.buildNewTodo(req.body, res.locals.authUser);
 		const validation_errors = await this._todoModel.validate(todo);
 		if (validation_errors.length > 0) {
 			return res.json({
@@ -55,7 +54,7 @@ export class TodoController {
 	}
 
 	public async update(req: express.Request, res: express.Response) {
-		let todo = await this._todoModel.findOne(Number(req.params.id), await getAuthUser(req.headers?.authorization ?? ''));
+		let todo = await this._todoModel.findOne(Number(req.params.id), res.locals.authUser);
 		if (!todo) {
 			return res.status(404).send("このTODOは存在しません");
 		}
@@ -78,7 +77,7 @@ export class TodoController {
 	}
 
 	public async delete(req: express.Request, res: express.Response) {
-		let todo = await this._todoModel.findOne(Number(req.params.id), await getAuthUser(req.headers?.authorization ?? ''));
+		let todo = await this._todoModel.findOne(Number(req.params.id), res.locals.authUser);
 		if (!todo) {
 			return res.status(404).send("このTODOは存在しません");
 		}

@@ -37,7 +37,9 @@ export class AuthController {
 		const user = await this._userModel.signin(req.body);
 
 		if (user) {
-			res.json({ result: 'SUCCESS', token: generateToken({ id: user.id }) });
+			// res.cookie('token', generateToken({ id: user.id }), { httpOnly: true });
+			res.cookie('token', generateToken({ id: user.id }));
+			res.json({ result: 'SUCCESS' });
 		} else {
 			res.status(404).send('メールアドレスまたはパスワードが異なります。');
 		}
