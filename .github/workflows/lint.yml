@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          npm install --legacy-peer-deps
+
       - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
