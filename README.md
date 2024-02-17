@@ -50,8 +50,11 @@ https://github.com/typestack/routing-controllers
 【参考】
 https://zenn.dev/ikefukurou777/articles/65cfd0289ac74d
 
+Expressで認証情報をCookieで管理する
+【参考】
+https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B
+
 ☆残タスク
-- JWTをCookieに載せる
 - 静的解析(ESLint, Prettier)
 - Github Actions
 	- 静的解析(ESLint, Prettier)
