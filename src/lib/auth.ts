@@ -22,11 +22,13 @@ export async function getAuthUser(token: string) {
 }
 
 export async function verifyAuth(req: express.Request, res: express.Response, next: NextFunction) {
-  const token = req.headers.authorization ?? '';
+  const token = req.cookies.token ?? '';
   const authUser = await getAuthUser(token);
   if (!authUser?.id) {
     res.status(404).send('認証情報が正しくありません。')
   }
 
+  // コントローラで認証ユーザを参照するための設定
+  res.locals.authUser = authUser;
   next();
 }

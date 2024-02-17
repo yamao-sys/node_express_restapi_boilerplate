@@ -48,7 +48,7 @@ describe('CRUD', () => {
 
 	let authUser: User;
 	let otherUser: User;
-	let token: string;
+	let cookie: string;
 
 	describe('/todos', () => {
 		describe('get', () => {
@@ -76,11 +76,11 @@ describe('CRUD', () => {
 						email: authUser.email,
 						password: 'password',
 					});
-					token = loginResponse.body.token;
+					cookie = loginResponse.get('Set-Cookie');
 				});
 
 				test('ログインユーザのTODO一覧が取得できること', async () => {
-					const response = await request(app).get('/todos').set({ authorization: token });
+					const response = await request(app).get('/todos').set('Cookie', cookie);
 
 					// NOTE: レスポンスが返ってくることの確認
 					expect(response.body.result).toEqual('SUCCESS');
@@ -111,13 +111,13 @@ describe('CRUD', () => {
 						email: authUser.email,
 						password: 'password',
 					});
-					token = loginResponse.body.token;
+					cookie = loginResponse.get('Set-Cookie');
 				});
 
 				test('TODOが作成できること', async () => {
 					// NOTE: タイトルの最大文字数 ※ 最小文字数は必須入力のバリデーションのテスト(titleが空の時)で行う
 					const title = faker.string.alpha({ length: 255 })
-					const response = await request(app).post('/todos').set({ authorization: token }).send({
+					const response = await request(app).post('/todos').set('Cookie', cookie).send({
 						title: title,
 						content: 'created content',
 					});
@@ -138,7 +138,7 @@ describe('CRUD', () => {
 				describe('titleのバリデーションエラーがある時', () => {
 					describe('titleが空の時', () => {
 						test('TODOの作成に失敗すること', async () => {
-							const response = await request(app).post('/todos').set({ authorization: token }).send({
+							const response = await request(app).post('/todos').set('Cookie', cookie).send({
 								title: '',
 								content: 'created content',
 							});
@@ -157,7 +157,7 @@ describe('CRUD', () => {
 	
 					describe('titleが文字数オーバーの時', () => {
 						test('TODOの作成に失敗すること', async () => {
-							const response = await request(app).post('/todos').set({ authorization: token }).send({
+							const response = await request(app).post('/todos').set('Cookie', cookie).send({
 								title: faker.string.alpha({ length: 256 }),
 								content: 'created content',
 							});
@@ -209,13 +209,13 @@ describe('CRUD', () => {
 						email: authUser.email,
 						password: 'password',
 					});
-					token = loginResponse.body.token;
+					cookie = loginResponse.get('Set-Cookie');
 				});
 
 				test('ログインユーザの指定したTODOが取得できること', async ()=> {
 					targetTodo = await todoRepository.findOneBy({ title: 'authUser title 1' });
 	
-					const response = await request(app).get(`/todos/${targetTodo?.id}`).set({ authorization: token });
+					const response = await request(app).get(`/todos/${targetTodo?.id}`).set('Cookie', cookie);
 		
 					// NOTE: レスポンスが返ってくることの確認
 					expect(response.body.result).toEqual('SUCCESS');
@@ -227,7 +227,7 @@ describe('CRUD', () => {
 					test('404エラーとなること', async ()=> {
 						latestTodo = await todoRepository.findOneBy({ title: 'authUser title 3' });
 	
-						const response = await request(app).get(`/todos/${Number(latestTodo?.id) + 1}`).set({ authorization: token });
+						const response = await request(app).get(`/todos/${Number(latestTodo?.id) + 1}`).set('Cookie', cookie);
 			
 						expect(response.status).toEqual(404);
 					});
@@ -236,7 +236,7 @@ describe('CRUD', () => {
 				test('ログインユーザ以外のTODOが取得不可であること', async ()=> {
 					targetTodo = await todoRepository.findOneBy({ user: otherUser });
 	
-					const response = await request(app).get(`/todos/${targetTodo?.id}`).set({ authorization: token });
+					const response = await request(app).get(`/todos/${targetTodo?.id}`).set('Cookie', cookie);
 		
 					expect(response.statusCode).toEqual(404);
 				});
@@ -263,13 +263,13 @@ describe('CRUD', () => {
 						email: authUser.email,
 						password: 'password',
 					});
-					token = loginResponse.body.token;
+					cookie = loginResponse.get('Set-Cookie');
 				});
 
 				test('ログインユーザの指定したTODOを更新できること', async () => {
 					targetTodo = await todoRepository.findOneBy({ title: 'authUser title 1' });
 	
-					const response = await request(app).put(`/todos/${targetTodo?.id}`).set({ authorization: token }).send({
+					const response = await request(app).put(`/todos/${targetTodo?.id}`).set('Cookie', cookie).send({
 						title: 'updated title',
 						content: 'updated content',
 					});
@@ -289,7 +289,7 @@ describe('CRUD', () => {
 					test('404エラーとなること', async ()=> {
 						latestTodo = await todoRepository.findOneBy({ title: 'authUser title 3' });
 	
-						const response = await request(app).put(`/todos/${Number(latestTodo?.id) + 1}`).set({ authorization: token }).send({
+						const response = await request(app).put(`/todos/${Number(latestTodo?.id) + 1}`).set('Cookie', cookie).send({
 							title: 'updated title',
 							content: 'updated content',
 						});
@@ -301,7 +301,7 @@ describe('CRUD', () => {
 				test('ログインユーザ以外のTODOが更新不可であること', async ()=> {
 					targetTodo = await todoRepository.findOneBy({ user: otherUser });
 	
-					const response = await request(app).put(`/todos/${targetTodo?.id}`).set({ authorization: token }).send({
+					const response = await request(app).put(`/todos/${targetTodo?.id}`).set('Cookie', cookie).send({
 						title: 'updated title',
 						content: 'updated content',
 					});
@@ -314,7 +314,7 @@ describe('CRUD', () => {
 						test('TODOの作成に失敗すること', async () => {
 							targetTodo = await todoRepository.findOneBy({ title: 'authUser title 1' });
 	
-							const response = await request(app).put(`/todos/${targetTodo?.id}`).set({ authorization: token }).send({
+							const response = await request(app).put(`/todos/${targetTodo?.id}`).set('Cookie', cookie).send({
 								title: '',
 								content: 'updated content',
 							});
@@ -334,7 +334,7 @@ describe('CRUD', () => {
 						test('TODOの作成に失敗すること', async () => {
 							targetTodo = await todoRepository.findOneBy({ title: 'authUser title 1' });
 	
-							const response = await request(app).put(`/todos/${targetTodo?.id}`).set({ authorization: token }).send({
+							const response = await request(app).put(`/todos/${targetTodo?.id}`).set('Cookie', cookie).send({
 								title: faker.string.alpha({ length: 256 }),
 								content: 'updated content',
 							});
@@ -370,13 +370,13 @@ describe('CRUD', () => {
 						email: authUser.email,
 						password: 'password',
 					});
-					token = loginResponse.body.token;
+					cookie = loginResponse.get('Set-Cookie');
 				});
 
 				test('ログインユーザの指定したTODOを削除できること', async () => {
 					targetTodo = await todoRepository.findOneBy({ title: 'authUser title 1' });
 		
-					const response = await request(app).delete(`/todos/${targetTodo?.id}`).set({ authorization: token });
+					const response = await request(app).delete(`/todos/${targetTodo?.id}`).set('Cookie', cookie);
 		
 					// NOTE: レスポンスが返ってくることの確認
 					expect(response.body.result).toEqual('SUCCESS');
@@ -390,7 +390,7 @@ describe('CRUD', () => {
 					test('404エラーとなること', async ()=> {
 						latestTodo = await todoRepository.findOneBy({ title: 'authUser title 3' });
 		
-						const response = await request(app).delete(`/todos/${Number(latestTodo?.id) + 1}`).set({ authorization: token });
+						const response = await request(app).delete(`/todos/${Number(latestTodo?.id) + 1}`).set('Cookie', cookie);
 			
 						expect(response.status).toEqual(404);
 					});
@@ -399,7 +399,7 @@ describe('CRUD', () => {
 				test('ログインユーザ以外のTODOが削除不可であること', async ()=> {
 					targetTodo = await todoRepository.findOneBy({ user: otherUser });
 	
-					const response = await request(app).delete(`/todos/${targetTodo?.id}`).set({ authorization: token });
+					const response = await request(app).delete(`/todos/${targetTodo?.id}`).set('Cookie', cookie);
 		
 					expect(response.statusCode).toEqual(404);
 				});
