@@ -8,6 +8,7 @@ services:
     # command: node index.js
     ports:
       - 8000:1234
+    env_file: ./.env.development
     tty: true
     stdin_open: true
   mysql:

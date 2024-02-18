@@ -7,6 +7,7 @@ import { expressjwt } from 'express-jwt'
 
 const authController = container.get<AuthController>(TYPES.AuthController)
 import cookieParser from 'cookie-parser'
+import { appConfig } from '../app.config'
 
 export const createAuthRoutes = (app: express.Express) => {
   app.post('/signup', async (req, res) => await authController.signup(req, res))
@@ -30,7 +31,7 @@ export const redirectLoginPageUnlessLoggedIn = (
 
 // JWTを使用してルートを保護する
 export const validateToken = expressjwt({
-  secret: process.env?.JWT_SECRET ?? 'aaa',
+  secret: appConfig.app.jwtSecret,
   algorithms: ['HS256'],
   getToken: (req) => req.cookies.token,
 })

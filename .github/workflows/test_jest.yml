@@ -12,8 +12,6 @@ jobs:
   jest:
     name: jest
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
     services:
       mysql:
         image: mysql:8.0.28
