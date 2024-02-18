@@ -65,3 +65,5 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 	- テスト時、本番のマイグレーション
 - legacy-peer-depsをしなくて良いように
 - 単体テストを書く
+- Dockerfileの調整
+	- 参考: https://note.com/newbees/n/nb6103851b17f#6a953cf6-c6d5-4878-b286-7b7e2cfe167c
