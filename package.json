@@ -11,7 +11,8 @@
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
     "eslint": "eslint **/*{.ts,.js}",
     "fix:eslint": "eslint **/*{.ts,.js} --fix",
-    "format": "prettier --write --ignore-path .gitignore './**/*.{js,ts,json,css}'"
+    "format": "prettier --write --ignore-path .gitignore './**/*.{js,ts,json,css}'",
+    "lint:prettier": "prettier --check --ignore-path .gitignore './**/*.{js,ts,json,css}'"
   },
   "jest": {
     "moduleFileExtensions": [

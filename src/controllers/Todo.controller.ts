@@ -37,7 +37,7 @@ export class TodoController {
   }
 
   public async create(req: express.Request, res: express.Response) {
-    const todo = await this._todoModel.buildNewTodo(req.body, res.locals.authUser)
+    const todo = await this._todoModel.buildNewTodo(req.body, res.locals.authUser);
     const validation_errors = await this._todoModel.validate(todo)
     if (validation_errors.length > 0) {
       return res.json({
