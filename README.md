@@ -54,12 +54,15 @@ Expressで認証情報をCookieで管理する
 【参考】
 https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B
 
+環境変数の管理
+【参考】
+・https://zenn.dev/dove/articles/5fd7926e7da949
+・https://qiita.com/saki-engineering/items/8e1c4e8ecbe3f3492b40
+
 ☆残タスク
-- 静的解析(ESLint, Prettier)
-- Github Actions
-	- 静的解析(ESLint, Prettier)
 - 環境変数の管理
 	- ローカルと本番で分ける
 - DBの設定
 	- テスト時、本番のマイグレーション
+- legacy-peer-depsをしなくて良いように
 - 単体テストを書く

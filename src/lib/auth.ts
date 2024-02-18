@@ -2,17 +2,18 @@ import express, { NextFunction } from 'express'
 import * as jwt from 'jsonwebtoken'
 import { User } from '../entities/User'
 import { AppDataSource } from '../data-source'
+import { appConfig } from '../app.config'
 
 export interface authUser {
   id: number
 }
 
 export function generateToken(user: authUser) {
-  return jwt.sign(user, process.env?.JWT_SECRET || 'aaa', { expiresIn: '1h' })
+  return jwt.sign(user, appConfig.app.jwtSecret, { expiresIn: '1h' })
 }
 
 export async function getAuthUser(token: string) {
-  const decodedToken = jwt.verify(token, process.env?.JWT_SECRET || 'aaa')
+  const decodedToken = jwt.verify(token, appConfig.app.jwtSecret)
 
   const user = await AppDataSource.getRepository(User).findOneBy({
     id: Number((decodedToken as any).id),
