@@ -58,6 +58,7 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 【参考】
 ・https://zenn.dev/dove/articles/5fd7926e7da949
 ・https://qiita.com/saki-engineering/items/8e1c4e8ecbe3f3492b40
+・https://zenn.dev/ncdc/articles/jest-environment
 
 ☆残タスク
 - 環境変数の管理
