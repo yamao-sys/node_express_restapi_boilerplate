@@ -12,7 +12,7 @@ module.exports = {
     project: './tsconfig.eslint.json',
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['dist', '.eslintrc.js'],
+  ignorePatterns: ['dist', '.eslintrc.js', 'src/db/migrations/*.ts'],
   extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
   rules: {
     'import/prefer-default-export': 'off',

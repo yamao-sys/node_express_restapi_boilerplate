@@ -61,6 +61,11 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 ・https://qiita.com/saki-engineering/items/8e1c4e8ecbe3f3492b40
 ・https://zenn.dev/ncdc/articles/jest-environment
 
+テスト・本番運用を見越したマイグレーション
+【参考】
+・https://okamuuu.hatenablog.com/entry/2020/01/24/153138
+・https://qiita.com/jnst/items/9a4c1a9f15b165e0e420
+
 ☆残タスク
 - DBの設定
 	- テスト時、本番のマイグレーション
