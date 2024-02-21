@@ -1,10 +1,10 @@
-import { injectable } from 'inversify'
-import { Repository } from 'typeorm'
-import { User } from '../entities/User'
-import { AppDataSource } from '../data-source'
-import { compare, hash } from 'bcrypt'
-import { validate } from 'class-validator'
-import { IUserModel, userParams } from './User.interface'
+import { injectable } from "inversify"
+import { Repository } from "typeorm"
+import { User } from "../entities/User"
+import { AppDataSource } from "../data-source"
+import { compare, hash } from "bcrypt"
+import { validate } from "class-validator"
+import { IUserModel, userParams } from "./User.interface"
 
 @injectable()
 export class UserModel implements IUserModel {
@@ -15,7 +15,7 @@ export class UserModel implements IUserModel {
   }
 
   public async buildNewUser(params: userParams) {
-    const hashedPassword = params.password ? await hash(params.password, 10) : ''
+    const hashedPassword = params.password ? await hash(params.password, 10) : ""
 
     const user = new User()
 

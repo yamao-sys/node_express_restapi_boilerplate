@@ -1,11 +1,11 @@
-import { Container } from 'inversify'
-import { TYPES } from './inject.types'
-import { TodoModel } from './models/Todo.model'
-import ITodoModel from './models/Todo.interface'
-import { TodoController } from './controllers/Todo.controller'
-import { IUserModel } from './models/User.interface'
-import { UserModel } from './models/User.model'
-import { AuthController } from './controllers/Auth.controller'
+import { Container } from "inversify"
+import { TYPES } from "./inject.types"
+import { TodoModel } from "./models/Todo.model"
+import ITodoModel from "./models/Todo.interface"
+import { TodoController } from "./controllers/Todo.controller"
+import { IUserModel } from "./models/User.interface"
+import { UserModel } from "./models/User.model"
+import { AuthController } from "./controllers/Auth.controller"
 
 const container = new Container()
 

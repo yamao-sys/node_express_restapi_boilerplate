@@ -1,30 +1,30 @@
 if (!process.env.NODE_ENV) {
-  console.error('NODE_ENV environment variables is missing')
+  console.error("NODE_ENV environment variables is missing")
   process.exit()
 }
 
 if (!process.env.DB_HOST) {
-  console.error('DB_HOST environment variables is missing')
+  console.error("DB_HOST environment variables is missing")
   process.exit()
 }
 
 if (!process.env.DB_NAME) {
-  console.error('DB_NAME environment variables is missing')
+  console.error("DB_NAME environment variables is missing")
   process.exit()
 }
 
 if (!process.env.SYNCHRONIZE) {
-  console.error('SYNCHRONIZE environment variables is missing')
+  console.error("SYNCHRONIZE environment variables is missing")
   process.exit()
 }
 
 if (!process.env.MIGRATIONS_RUN) {
-  console.error('MIGRATIONS_RUN environment variables is missing')
+  console.error("MIGRATIONS_RUN environment variables is missing")
   process.exit()
 }
 
 if (!process.env.JWT_SECRET) {
-  console.error('JWT_SECRET environment variables is missing')
+  console.error("JWT_SECRET environment variables is missing")
   process.exit()
 }
 

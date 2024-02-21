@@ -1,10 +1,10 @@
-import { Repository } from 'typeorm'
-import Todo from '../entities/Todo'
-import { User } from '../entities/User'
-import { validate } from 'class-validator'
-import { injectable } from 'inversify'
-import { AppDataSource } from '../data-source'
-import ITodoModel, { todoParams } from './Todo.interface'
+import { Repository } from "typeorm"
+import Todo from "../entities/Todo"
+import { User } from "../entities/User"
+import { validate } from "class-validator"
+import { injectable } from "inversify"
+import { AppDataSource } from "../data-source"
+import ITodoModel, { todoParams } from "./Todo.interface"
 
 @injectable()
 export class TodoModel implements ITodoModel {
