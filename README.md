@@ -19,6 +19,7 @@ npx ts-node src/db/seeds/seed.ts
 
 参考: https://www.devist.xyz/posts/how-to-seed-a-database-with-type-orm-and-faker-in-2023
 
+Nest.jsではTypeORMを標準対応しているらしい。
 
 単体テスト
 【参考】
@@ -59,6 +60,11 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 ・https://zenn.dev/dove/articles/5fd7926e7da949
 ・https://qiita.com/saki-engineering/items/8e1c4e8ecbe3f3492b40
 ・https://zenn.dev/ncdc/articles/jest-environment
+
+テスト・本番運用を見越したマイグレーション
+【参考】
+・https://okamuuu.hatenablog.com/entry/2020/01/24/153138
+・https://qiita.com/jnst/items/9a4c1a9f15b165e0e420
 
 ☆残タスク
 - DBの設定

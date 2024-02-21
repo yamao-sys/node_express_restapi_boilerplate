@@ -1,7 +1,7 @@
-import { Faker } from '@faker-js/faker'
+import { Faker } from "@faker-js/faker"
 
-import Todo from '../../entities/Todo'
-import { setSeederFactory } from 'typeorm-extension'
+import Todo from "../../entities/Todo"
+import { setSeederFactory } from "typeorm-extension"
 
 export const TodosFactory = setSeederFactory(Todo, (faker: Faker) => {
   const todo = new Todo()

@@ -1,4 +1,4 @@
-import { ValidationError } from 'class-validator'
+import { ValidationError } from "class-validator"
 
 export function format_validation_errors(errors: ValidationError[]) {
   return errors
@@ -10,5 +10,5 @@ export function format_validation_errors(errors: ValidationError[]) {
       return messages
     })
     .flat()
-    .join('\n')
+    .join("\n")
 }

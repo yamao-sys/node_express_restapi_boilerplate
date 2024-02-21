@@ -1,9 +1,9 @@
-import express from 'express'
-import { inject, injectable } from 'inversify'
-import { IUserModel } from '../models/User.interface'
-import { TYPES } from '../inject.types'
-import { format_validation_errors } from '../lib/format_validation_errors'
-import { generateToken } from '../lib/auth'
+import express from "express"
+import { inject, injectable } from "inversify"
+import { IUserModel } from "../models/User.interface"
+import { TYPES } from "../inject.types"
+import { format_validation_errors } from "../lib/format_validation_errors"
+import { generateToken } from "../lib/auth"
 
 @injectable()
 export class AuthController {
@@ -22,14 +22,14 @@ export class AuthController {
     const validation_errors = await this._userModel.validate(user)
     if (validation_errors.length > 0) {
       return res.json({
-        result: 'FAILED TO SIGNUP',
+        result: "FAILED TO SIGNUP",
         errors: format_validation_errors(validation_errors),
       })
     }
 
     await this._userModel.save(user)
 
-    res.json({ result: 'SUCCESS' })
+    res.json({ result: "SUCCESS" })
   }
 
   public async login(req: express.Request, res: express.Response) {
@@ -38,10 +38,10 @@ export class AuthController {
 
     if (user) {
       // res.cookie('token', generateToken({ id: user.id }), { httpOnly: true });
-      res.cookie('token', generateToken({ id: user.id }))
-      res.json({ result: 'SUCCESS' })
+      res.cookie("token", generateToken({ id: user.id }))
+      res.json({ result: "SUCCESS" })
     } else {
-      res.status(404).send('メールアドレスまたはパスワードが異なります。')
+      res.status(404).send("メールアドレスまたはパスワードが異なります。")
     }
   }
 }
