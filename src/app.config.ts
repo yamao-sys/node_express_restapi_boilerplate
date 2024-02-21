@@ -13,11 +13,6 @@ if (!process.env.DB_NAME) {
   process.exit()
 }
 
-if (!process.env.DB_DROP_SCHEMA) {
-  console.error('DB_DROP_SCHEMA environment variables is missing')
-  process.exit()
-}
-
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET environment variables is missing')
   process.exit()
@@ -28,7 +23,6 @@ export const appConfig = {
     nodeEnv: process.env.NODE_ENV,
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME,
-    dbDropSchema: Boolean(process.env.DB_DROP_SCHEMA),
     jwtSecret: process.env.JWT_SECRET,
   },
 }

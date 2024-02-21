@@ -11,7 +11,6 @@ const options: DataSourceOptions & SeederOptions = {
   password: 'root',
   database: appConfig.app.dbName,
   synchronize: true,
-  dropSchema: appConfig.app.dbDropSchema,
   logging: false,
   entities: ['src/entities/*.ts'],
   migrations: ['src/db/migrations/*.ts'],

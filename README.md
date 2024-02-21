@@ -19,6 +19,7 @@ npx ts-node src/db/seeds/seed.ts
 
 参考: https://www.devist.xyz/posts/how-to-seed-a-database-with-type-orm-and-faker-in-2023
 
+Nest.jsではTypeORMを標準対応しているらしい。
 
 単体テスト
 【参考】
