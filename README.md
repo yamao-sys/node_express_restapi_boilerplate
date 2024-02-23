@@ -69,6 +69,10 @@ https://zenn.dev/marokanatani/articles/d0777a34641d22#jwt%E3%82%92cookie%E3%81%A
 ☆残タスク
 - DBの設定
 	- テスト時、本番のマイグレーション → 土曜日にECSでやってみる
+	- 参考
+		- https://qiita.com/saki-engineering/items/8e1c4e8ecbe3f3492b40#%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E8%A8%AD%E5%AE%9A
+		- https://dev.classmethod.jp/articles/amazon-ecs-entrance-1/
+		- https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/getting-started.html
 - legacy-peer-depsをしなくて良いように → ボイラーテンプレート作成時に改めてトライ
 - 単体テストを書く
 - Dockerfileの調整
