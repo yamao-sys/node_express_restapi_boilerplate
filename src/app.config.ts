@@ -3,6 +3,11 @@ if (!process.env.NODE_ENV) {
   process.exit()
 }
 
+if (!process.env.BASE_URL) {
+  console.error("BASE_URL environment variables is missing")
+  process.exit()
+}
+
 if (!process.env.DB_HOST) {
   console.error("DB_HOST environment variables is missing")
   process.exit()
@@ -31,6 +36,7 @@ if (!process.env.JWT_SECRET) {
 export const appConfig = {
   app: {
     nodeEnv: process.env.NODE_ENV,
+    baseUrl: process.env.BASE_URL,
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME,
     synchronize: Boolean(process.env.SYNCHRONIZE),
