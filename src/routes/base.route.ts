@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 const corsOptions = {
   origin: appConfig.app.baseUrl,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 }
 app.use(cors(corsOptions))
 
