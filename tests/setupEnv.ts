@@ -2,6 +2,7 @@ export default (): void => {
   console.log("Setup test environment")
 
   process.env.NODE_ENV = "test"
+  process.env.BASE_URL = "http://localhost"
   process.env.DB_HOST ||= "db"
   process.env.DB_NAME = "simple_todo_test"
   process.env.SYNCHRONIZE = "true"
